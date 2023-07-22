@@ -10,19 +10,50 @@ import requests
 
 def gather_data_from_site(url):
     """
-    This is a function that gathers all data from the 
+    This is a function that gathers all data from the
     basketball reference page for past WNBA MVP's.
 
     :param: link to all the past WNBA MVP's
     :return: all of the data but not clean.
     """
 
-    # A request is made to the website and set to parse through html
+    # A request is made to the website and set to parse through html.
     website_page = requests.get(url)
     website_data = BeautifulSoup(website_page.text, 'html.parser')
 
-    # Parses through and selects table of MVP's and gets all its rows
+    # Parses through and selects table of MVP's and gets all its rows.
     table_of_mvps = website_data.find('table')
     mvp_data = table_of_mvps.find_all('tr')
 
-    return mvp_data
+    # Parses through to get the names and categories of each statistic.
+    statistic_names = table_of_mvps.find('thead')
+    statistic_names = statistic_names.find_all('tr')
+
+    # Combines data sets together and returns
+    return statistic_names + mvp_data
+
+
+def clean_data_from_site(unclean_data):
+    """
+    This is a function that cleans data gathered from a
+    table of the WNBA's past MVP's.
+
+    :param: unclean and sorted data
+    :return: cleaned data
+    """
+
+    # Cleaned dataset is created as list
+    cleaned_data = []
+
+    # Loop runs for each MVP.
+    for mvp in unclean_data:
+        # Finds each stat (needs to get header data and regular)
+        statistics = mvp.find_all('th') + mvp.find_all('td')
+
+        # Loop runs for each statistic.
+        for x in range(len(statistics)):
+            # Converts statistic to text form.
+            statistics[x] = statistics[x].text.strip()
+
+        # Cleaned data is added to the list
+        cleaned_data.append(statistics)
