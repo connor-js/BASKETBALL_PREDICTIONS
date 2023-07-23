@@ -51,7 +51,40 @@ def clean_data_from_site(unclean_data):
             # Converts statistic to text form.
             statistics[x] = statistics[x].text.strip()
 
+            # Converts statistic to float/int if possible
+            statistics[x] = string_to_number_conversion(statistics[x])
+
         # Cleaned data is added to the list
         cleaned_data.append(statistics)
 
     return cleaned_data
+
+
+def string_to_number_conversion(input_string):
+    """
+    This is a function that converts strings to a
+    float or integer (depending on what number is)
+    or leaves string as is, if its not a number
+
+    :param: string
+    :return: unchanged string
+    :return: int
+    :return: float
+
+    """
+
+    # Tries to convert string to workable number if coming across
+    # float/int
+    try:
+        converted_string = float(input_string)
+
+        # Checks if number is int (like jersey number or year)
+        # and keeps it as so.
+        if converted_string.is_integer():
+            converted_string = int(converted_string)
+
+        return converted_string
+
+    # Carries on as is if not a number
+    except ValueError:
+        return input_string
