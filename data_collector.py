@@ -25,12 +25,8 @@ def gather_data_from_site(url):
     table_of_mvps = website_data.find('table')
     mvp_data = table_of_mvps.find_all('tr')
 
-    # Parses through to get the names and categories of each statistic.
-    statistic_names = table_of_mvps.find('thead')
-    statistic_names = statistic_names.find_all('tr')
-
     # Combines data sets together and returns
-    return statistic_names + mvp_data
+    return mvp_data
 
 
 def clean_data_from_site(unclean_data):
@@ -57,3 +53,5 @@ def clean_data_from_site(unclean_data):
 
         # Cleaned data is added to the list
         cleaned_data.append(statistics)
+
+    return cleaned_data
