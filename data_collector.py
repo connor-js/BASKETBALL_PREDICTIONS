@@ -93,7 +93,37 @@ def string_to_number_conversion(input_string):
         return input_string
 
 
+def list_to_dictionairy(list_form_data):
+    """
+    This is a function that takes each player and their
+    data and puts it into a dictionairy form so it's easier
+    to work with in SQL.
+
+    :param: cleaned data in nested list form
+    :return: cleaned data as a list of dictionairys
+    """
+
+    # Creates empty list so data in dictionairy form can be added.
+    dictionairy_form_data = []
+
+    # Runs for every list in the nested list except the first
+    # because first is the list of different statictics.
+    for x in range(1, len(list_form_data)):
+        # New dictionairy is created
+        players_stats_as_dict = {}
+
+        # Runs for each item in list.
+        for y in range(len(clean_data[x])):
+            # Makes key the stat name and the value the corresponding stat.
+            players_stats_as_dict[clean_data[0][y]] = clean_data[x][y]
+
+        # Data is added to the list.
+        dictionairy_form_data.append(players_stats_as_dict)
+
+    return dictionairy_form_data
+
+
 if __name__ == '__main__':
     raw_data = gather_data_from_site("https://www.basketball-reference.com/wnba/awards/mvp.html")
     clean_data = clean_data_from_site(raw_data)
-    print(clean_data)
+    dict_form_data = list_to_dictionairy(clean_data)
