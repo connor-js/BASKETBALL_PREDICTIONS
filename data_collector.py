@@ -57,6 +57,9 @@ def clean_data_from_site(unclean_data):
         # Cleaned data is added to the list
         cleaned_data.append(statistics)
 
+    # Removes first result as it is unnneeded data leftover from table.
+    cleaned_data.pop(0)
+
     return cleaned_data
 
 
@@ -88,3 +91,9 @@ def string_to_number_conversion(input_string):
     # Carries on as is if not a number
     except ValueError:
         return input_string
+
+
+if __name__ == '__main__':
+    raw_data = gather_data_from_site("https://www.basketball-reference.com/wnba/awards/mvp.html")
+    clean_data = clean_data_from_site(raw_data)
+    print(clean_data)
