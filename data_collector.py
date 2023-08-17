@@ -54,7 +54,7 @@ def clean_data_from_site(unclean_data):
             # Converts statistic to float/int if possible
             statistics[x] = string_to_number_conversion(statistics[x])
 
-        # Cleaned data is added to the list
+        # Cleaned data is added to the list. 
         cleaned_data.append(statistics)
 
     # Removes first result as it is unnneeded data leftover from table.
@@ -113,9 +113,11 @@ def list_to_dictionairy(list_form_data):
         players_stats_as_dict = {}
 
         # Runs for each item in list.
-        for y in range(len(clean_data[x])):
-            # Makes key the stat name and the value the corresponding stat.
-            players_stats_as_dict[clean_data[0][y]] = clean_data[x][y]
+        for y in range(len(list_form_data[x])):
+            # Exludes voting stat as its link to voting numbers not a stat.
+            if list_form_data[x][y] != '(V)':
+                # Makes key the stat name and the value the corresponding stat.
+                players_stats_as_dict[list_form_data[0][y]] = clean_data[x][y]
 
         # Data is added to the list.
         dictionairy_form_data.append(players_stats_as_dict)
